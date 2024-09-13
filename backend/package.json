@@ -1,0 +1,36 @@
+{
+  "name": "expense-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/src/functions/*.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "clean": "rimraf dist",
+    "prestart": "npm run clean && npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\"",
+    "db:diff": "echo 'Enter migration name:\n' && read migration_name && npm run typeorm:connected migration:generate ./src/migrations/${migration_name}",
+    "db:migration": "npm run typeorm:connected migration:run",
+    "db:revert": "npx typeorm migration:revert -d dist/src/data-source.js",
+    "ts": "ts-node",
+    "typeorm": "NODE_OPTIONS='-r tsconfig-paths/register -r reflect-metadata' typeorm-ts-node-commonjs",
+    "typeorm:connected": "npm run typeorm -- -d ./src/data-source.ts"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
+    "mssql": "^10.0.4",
+    "reflect-metadata": "^0.2.2",
+    "tsconfig-paths": "^4.2.0",
+    "typeorm": "^0.3.20"
+  },
+  "devDependencies": {
+    "@types/node": "18.x",
+    "azure-functions-core-tools": "^4.x",
+    "rimraf": "^5.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2021", // Update this to a version that supports decorators
+    "module": "commonjs",
+    "emitDecoratorMetadata": true, // Required for TypeORM
+    "experimentalDecorators": true, // Required for TypeORM
+    "strict": false, // Optional: Disable strict mode if you're having type issues
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "outDir": "./dist/src",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
