@@ -1,9 +1,6 @@
 // src/data-source.ts
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { ExpenseItem } from './entities/ExpenseItem.entity';
-import { Expense } from './entities/Expense.entity';
-
 // Load .env file
 dotenv.config();
 
@@ -15,7 +12,7 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: false, // Disable synchronize in production
-  migrations: ['src/migrations/*.js'], // Path to migration files
+  migrations: ['dist/**/migrations/*.js'], // Path to migration files
   entities: ['dist/**/*.entity.js'],
   logging: true,
   subscribers: ['src/migrations/'],

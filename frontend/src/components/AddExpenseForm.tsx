@@ -1,14 +1,8 @@
-import {
-  Modal,
-  Form,
-  Input,
-  InputNumber,
-  Select,
-  Button,
-  DatePicker,
-} from 'antd';
+import { Modal, Form, InputNumber, Select, Button, DatePicker } from 'antd';
 import { ExpenseItem } from '../types/type';
 import { useEffect } from 'react';
+import { UniqueCategory, UniqueItem } from '../api/types/dto';
+import AutoCompleteWithOptions from './AutoCompleteWithOptions';
 
 type Props = {
   isModalVisible: boolean;
@@ -16,6 +10,9 @@ type Props = {
   handleAddExpense: (values: ExpenseItem) => void;
   isSaving: boolean;
   isSuccess: boolean;
+  uniqueItems: UniqueItem[];
+  uniqueCategories: UniqueCategory[];
+  uniqueSubCategories: UniqueCategory[];
 };
 
 const { Option } = Select;
@@ -26,10 +23,27 @@ export const AddExpenseModal = ({
   handleAddExpense,
   isSaving,
   isSuccess,
+  uniqueItems,
+  uniqueCategories,
+  uniqueSubCategories,
 }: Props) => {
   const [form] = Form.useForm();
   const onFinish = (values: ExpenseItem) => {
     handleAddExpense(values);
+  };
+
+  const toDefaultOptionsType = (options: UniqueItem[] | UniqueCategory[]) => {
+    if (options.length && 'category' in options[0]) {
+      return (options as UniqueCategory[])?.map((c) => ({
+        label: c.category,
+        value: c.id,
+      }));
+    }
+
+    return (options as UniqueItem[])?.map((i) => ({
+      label: i.item,
+      value: i.id,
+    }));
   };
 
   useEffect(() => {
@@ -53,7 +67,11 @@ export const AddExpenseModal = ({
           name="item"
           rules={[{ required: true, message: 'Please enter the expense item' }]}
         >
-          <Input placeholder="Enter item" />
+          <AutoCompleteWithOptions
+            autoCompleteOptions={toDefaultOptionsType(uniqueItems)}
+            onChange={(value: string) => form.setFieldValue('item', value)} // Sync form value
+            value={form.getFieldValue('item')} // Controlled value from form
+          />
         </Form.Item>
 
         <Form.Item
@@ -74,16 +92,24 @@ export const AddExpenseModal = ({
           name="category"
           rules={[{ required: true, message: 'Please select a category' }]}
         >
-          <Select
-            mode="multiple"
-            placeholder="Select category"
-            style={{ minWidth: 200 }}
-          >
-            <Option value="Food">Food</Option>
-            <Option value="Transportation">Transportation</Option>
-            <Option value="Entertainment">Entertainment</Option>
-            <Option value="Utilities">Utilities</Option>
-          </Select>
+          <AutoCompleteWithOptions
+            autoCompleteOptions={toDefaultOptionsType(uniqueCategories)}
+            onChange={(value: string) => form.setFieldValue('category', value)} // Sync form value
+            value={form.getFieldValue('category')} // Controlled value from form
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Sub Category"
+          name="subCategory"
+        >
+          <AutoCompleteWithOptions
+            autoCompleteOptions={toDefaultOptionsType(uniqueSubCategories)}
+            onChange={(value: string) =>
+              form.setFieldValue('subCategory', value)
+            } // Sync form value
+            value={form.getFieldValue('subCategory')} // Controlled value from form
+          />
         </Form.Item>
 
         <Form.Item

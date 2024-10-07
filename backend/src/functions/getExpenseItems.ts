@@ -15,14 +15,11 @@ export async function getExpenseItems(
     const timePeriod = req.query.get('timePeriod');
     const referenceDate = req.query.get('referenceDate');
 
-    const { expenseItems, totalSpend } = await getExpenseItemsService(
-      timePeriod,
-      referenceDate
-    );
+    const result = await getExpenseItemsService(timePeriod, referenceDate);
 
     return {
       status: 200,
-      jsonBody: { expenseItems, totalSpend },
+      jsonBody: result,
     };
   } catch (error) {
     context.log('Error fetching expense items:', error);

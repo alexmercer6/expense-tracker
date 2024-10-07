@@ -1,6 +1,6 @@
 // src/hooks/useGetExpenseItems.ts
 import { useQuery } from '@tanstack/react-query';
-import { useExpenseApi } from '../routes/useDeleteExpenseApi';
+import { useExpenseApi } from '../routes/useExpenseApi';
 
 export const useGetAllExpenseItemsQuery = (
   timePeriod?: string,

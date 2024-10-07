@@ -1,7 +1,7 @@
 // src/hooks/useDeleteExpenseItem.ts
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ExpenseItem } from '../../types/type';
-import { useExpenseApi } from '../routes/useDeleteExpenseApi';
+import { useExpenseApi } from '../routes/useExpenseApi';
 
 export const useDeleteExpenseItem = () => {
   const queryClient = useQueryClient();
