@@ -12,8 +12,11 @@ export class ExpenseItem {
   @Column('decimal')
   cost: number;
 
-  @Column('simple-array')
-  category: string[]; // List of strings
+  @Column()
+  category: string;
+
+  @Column({ nullable: true })
+  subCategory: string;
 
   @Column()
   isNecessary: boolean;

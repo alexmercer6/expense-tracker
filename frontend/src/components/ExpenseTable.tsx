@@ -4,7 +4,6 @@ import {
   Tabs,
   DatePicker,
   Button,
-  Alert,
   notification,
   Typography,
 } from 'antd';
@@ -63,7 +62,11 @@ const ExpenseTable = () => {
       title: 'Category',
       dataIndex: 'category',
       key: 'category',
-      render: (categories: string[]) => categories.join(', '),
+    },
+    {
+      title: 'Sub Category',
+      dataIndex: 'subCategory',
+      key: 'subCategory',
     },
     {
       title: 'Necessary',
@@ -212,6 +215,7 @@ const ExpenseTable = () => {
         dataSource={expenseItems?.expenseItems || []}
         columns={columns}
         rowKey="id" // Ensure a unique row key
+        scroll={{ y: '100vh', x: 'max-content' }}
       />
       <AddExpenseModal
         handleAddExpense={handleAddExpense}
@@ -219,12 +223,10 @@ const ExpenseTable = () => {
         isModalVisible={isModalVisible}
         isSaving={addExpenseItem.isPending}
         isSuccess={addExpenseItem.isSuccess}
+        uniqueItems={expenseItems?.uniqueItems ?? []}
+        uniqueCategories={expenseItems?.uniqueCategories ?? []}
+        uniqueSubCategories={expenseItems?.uniqueSubCategories ?? []}
       />
-      {/* <Alert
-        showIcon
-        message={addExpenseItem.error?.message}
-        type="error"
-      /> */}
     </div>
   );
 };

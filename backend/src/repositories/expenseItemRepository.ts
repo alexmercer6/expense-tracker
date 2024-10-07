@@ -34,6 +34,13 @@ export async function saveExpenseItem(
 ): Promise<ExpenseItem> {
   return await expenseItemRepository.save(expenseItem);
 }
+export async function saveExpenseItems(
+  expenseItems: ExpenseItem[]
+): Promise<void> {
+  for (let item of expenseItems) {
+    await expenseItemRepository.save(item);
+  }
+}
 
 export async function updateExpenseItem(
   id: number,

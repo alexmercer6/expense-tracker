@@ -10,15 +10,17 @@
     "prestart": "npm run clean && npm run build",
     "start": "func start",
     "test": "echo \"No tests yet...\"",
-    "db:diff": "echo 'Enter migration name:\n' && read migration_name && npm run typeorm:connected migration:generate ./src/migrations/${migration_name}",
-    "db:migration": "npm run typeorm:connected migration:run",
+    "db:diff": "echo 'Enter migration name:\n' && read migration_name && npm run clean && npm run build && npm run typeorm:connected migration:generate ./src/migrations/${migration_name}",
+    "db:migrate": "npm run clean && npm run build && npm run typeorm:connected migration:run",
     "db:revert": "npx typeorm migration:revert -d dist/src/data-source.js",
+    "db:reset": "./scripts/reset-database.sh",
     "ts": "ts-node",
     "typeorm": "NODE_OPTIONS='-r tsconfig-paths/register -r reflect-metadata' typeorm-ts-node-commonjs",
-    "typeorm:connected": "npm run typeorm -- -d ./src/data-source.ts"
+    "typeorm:connected": "npm run typeorm -- -d ./dist/src/data-source.js"
   },
   "dependencies": {
     "@azure/functions": "^4.0.0",
+    "csv-parse": "^5.5.6",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "mssql": "^10.0.4",
